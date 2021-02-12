@@ -32,9 +32,13 @@ module.exports = {
     'react/jsx-filename-extension': [2, { extensions: ['.js', '.jsx', '.ts', '.tsx'] }],
     'react/jsx-curly-brace-presence': [2, { props: 'ignore', children: 'always' }],
     'react/jsx-pascal-case': [0],
+    'react/prop-types': [0],
     'import/extensions': 'off',
     'import/prefer-default-export': 'off',
     'object-curly-newline': ['error', { consistent: true }],
-    'arrow-body-style': ['error', 'always']
+    'arrow-body-style': ['error', 'as-needed'],
+    'implicit-arrow-linebreak': 'off',
+    'global-require': 'off',
+    'no-param-reassign': 'off'
   }
 };

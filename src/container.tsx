@@ -1,12 +1,19 @@
 import React from 'react';
-import { ThemeProvider, createMuiTheme } from '@material-ui/core/styles';
-import { BrowserRouter as Router, Switch, Route, Link } from 'react-router-dom';
+import {
+  ThemeProvider,
+  createMuiTheme,
+  makeStyles,
+  createStyles,
+  Theme
+} from '@material-ui/core/styles';
+import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
 
 import { NavBar } from './components/nav-bar';
+import { LeftSidebar } from './components/left-sidebar';
 import { Dashboard } from './scenes/dashboard';
 import { Invoices } from './scenes/invoices';
 
-const theme = createMuiTheme({
+const customTheme = createMuiTheme({
   palette: {
     type: 'dark',
     primary: {
@@ -18,19 +25,31 @@ const theme = createMuiTheme({
   }
 });
 
+const useStyles = makeStyles((theme: Theme) =>
+  createStyles({
+    content: {
+      display: 'flex'
+    }
+  }));
+
 export const App = () => {
+  const sidebarWidth = 240;
+  const classes = useStyles();
   return (
-    <ThemeProvider theme={theme}>
+    <ThemeProvider theme={customTheme}>
       <Router>
         <NavBar />
-        <Switch>
-          <Route exact path="/">
-            <Dashboard />
-          </Route>
-          <Route exact path="/invoices">
-            <Invoices />
-          </Route>
-        </Switch>
+        <div className={classes.content}>
+          <LeftSidebar width={sidebarWidth} />
+          <Switch>
+            <Route exact path="/">
+              <Dashboard />
+            </Route>
+            <Route exact path="/invoices">
+              <Invoices />
+            </Route>
+          </Switch>
+        </div>
       </Router>
     </ThemeProvider>
   );
