@@ -39,6 +39,7 @@ module.exports = {
     'arrow-body-style': ['error', 'as-needed'],
     'implicit-arrow-linebreak': 'off',
     'global-require': 'off',
-    'no-param-reassign': 'off'
+    'no-param-reassign': 'off',
+    'no-undef': 'off'
   }
 };

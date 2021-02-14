@@ -19,6 +19,7 @@ type StyleProps = {
 const useStyles = makeStyles<Theme, StyleProps>((theme) =>
   createStyles({
     drawer: {
+      flex: '0 0 auto',
       [theme.breakpoints.up('sm')]: {
         width: (p) => p.width
       }
