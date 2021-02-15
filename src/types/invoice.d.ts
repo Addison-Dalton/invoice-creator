@@ -34,3 +34,14 @@ type InvoiceFormAction = {
 }
 
 type InvoiceFormActionType = 'change_base_info' | 'change_personal_info' | 'change_work_item';
+
+/* eslint-disable no-unused-vars */
+type HandleInputChange = (
+  e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
+  type: InvoiceFormActionType
+) => void;
+
+type FormFields = {
+  handleInputChange: HandleInputChange;
+  values: InvoiceFormValues
+}

@@ -1,14 +1,17 @@
 import React, { useEffect, useReducer, ChangeEvent } from 'react';
 import styled from 'styled-components';
-import { Paper, Box, Container, Grid, TextField } from '@material-ui/core';
-import { Theme } from '@material-ui/core/styles';
+import {
+  Paper,
+  Box,
+  Container,
+  Grid,
+  Divider
+} from '@material-ui/core';
 
-const $TextField = styled(TextField)`
-  ${({ theme }: { theme: Theme }) => `
-    width: 80%;
-    margin: ${theme.spacing(1)}px;
-  `}
-`;
+import { reducer } from '../../../services/invoice/new-invoice-form/reducer';
+
+import { PersonalInfoFields } from './personal-info-fields';
+import { InvoiceInfoFields } from './invoice-info-fields';
 
 const initialValues: InvoiceFormValues = {
   id: 0,
@@ -24,30 +27,10 @@ const initialValues: InvoiceFormValues = {
   workItems: []
 };
 
-const reducer = (
-  state: InvoiceFormValues,
-  action: InvoiceFormAction
-): InvoiceFormValues => {
-  switch (action.type) {
-    case 'change_base_info':
-      return {
-        ...state,
-        [action.key]: action.value
-      };
-
-    case 'change_personal_info':
-      return {
-        ...state,
-        personalInfo: {
-          ...state.personalInfo,
-          [action.key]: action.value
-        }
-      };
-
-    default:
-      return state;
-  }
-};
+const $Divider = styled(Divider)`
+  margin: auto;
+  width: 75%;
+`;
 
 export const InvoiceForm = () => {
   const [values, dispatch] = useReducer(reducer, initialValues);
@@ -66,23 +49,10 @@ export const InvoiceForm = () => {
       <Paper elevation={2}>
         <Box p={2}>
           <form>
-            <Grid container>
-              <Grid item xs={6}>
-                <$TextField
-                  variant="outlined"
-                  label="Full name"
-                  name="name"
-                  value={values.personalInfo.name}
-                  onChange={(e) => handleInputChange(e, 'change_personal_info')}
-                />
-                <$TextField
-                  variant="outlined"
-                  label="Email"
-                  name="email"
-                  value={values.personalInfo.email}
-                  onChange={(e) => handleInputChange(e, 'change_personal_info')}
-                />
-              </Grid>
+            <Grid container spacing={2}>
+              <InvoiceInfoFields handleInputChange={handleInputChange} values={values} />
+              <Grid item xs={12}><$Divider /></Grid>
+              <PersonalInfoFields handleInputChange={handleInputChange} values={values} />
             </Grid>
           </form>
         </Box>
