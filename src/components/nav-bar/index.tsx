@@ -1,17 +1,15 @@
 import React from 'react';
 import { useDispatch } from 'react-redux';
 import styled from 'styled-components';
-import { AppBar, IconButton, Toolbar, Typography } from '@material-ui/core';
+import { AppBar, IconButton, Toolbar } from '@material-ui/core';
 import MenuIcon from '@material-ui/icons/Menu';
 import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+
+import { Heading5 } from '../typography';
 
 import { handleLeftSidebarToggle } from '../../services/navigation/navigation-slice';
 
 const $NavBar = styled(Toolbar)``;
-
-const $Title = styled(Typography)`
-  margin-right: 1rem;
-`;
 
 const useStyles = makeStyles((theme: Theme) => createStyles({
   appBar: {
@@ -41,7 +39,7 @@ export const NavBar = () => {
           >
             <MenuIcon />
           </IconButton>
-          <$Title variant="h5">{'Invoice App'}</$Title>
+          <Heading5>{'Invoice App'}</Heading5>
         </$NavBar>
       </AppBar>
       {/* This Toolbar component is here to provide space behind the AppBar */}
