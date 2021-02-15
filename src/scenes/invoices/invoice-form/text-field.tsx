@@ -1,6 +1,12 @@
 import styled from 'styled-components';
-import { TextField } from '@material-ui/core';
+import { TextField, Theme } from '@material-ui/core';
 
 export const $TextField = styled(TextField)`
-  width: 90%;
+  ${({ theme }: { theme: Theme }) => `
+    width: 90%;
+
+    ${theme.breakpoints.down('xs')} {
+      width: 100%
+    }
+  `}
 `;
