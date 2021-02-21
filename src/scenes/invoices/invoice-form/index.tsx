@@ -17,7 +17,8 @@ const initialValues: InvoiceFormValues = {
   id: 0,
   invoiceNo: '000',
   date: new Date(),
-  term: '',
+  termBegin: new Date(),
+  termEnd: new Date(),
   personalInfo: {
     name: '',
     email: '',
@@ -27,10 +28,10 @@ const initialValues: InvoiceFormValues = {
   workItems: []
 };
 
-const $Divider = styled(Divider)`
-  margin: auto;
-  width: 75%;
-`;
+const $Divider = styled(Divider)(({ theme }: StyledMuiTheme) => `
+  margin: ${theme.spacing(1)}px auto;
+  width: 80%;
+`);
 
 export const InvoiceForm = () => {
   const [values, dispatch] = useReducer(reducer, initialValues);
@@ -51,7 +52,7 @@ export const InvoiceForm = () => {
           <form>
             <Grid container spacing={2}>
               <InvoiceInfoFields handleInputChange={handleInputChange} values={values} />
-              <Grid item xs={12}><$Divider /></Grid>
+              <Grid item xs={12} spacing={5}><$Divider /></Grid>
               <PersonalInfoFields handleInputChange={handleInputChange} values={values} />
             </Grid>
           </form>

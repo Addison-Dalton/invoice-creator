@@ -2,7 +2,8 @@ type InvoiceFormValues = {
   id: number;
   invoiceNo: string;
   date: Date;
-  term: string; // date range work was done within
+  termBegin: Date;
+  termEnd: Date;
   personalInfo: PersonalInfo;
   workItems: WorkItem[];
 }

@@ -1,4 +1,5 @@
 import React, { useState, useEffect } from 'react';
+import styled from 'styled-components';
 import { useDispatch } from 'react-redux';
 import { throttle } from 'throttle-debounce';
 import {
@@ -8,19 +9,19 @@ import {
   ListItemText
 } from '@material-ui/core';
 import { Home, Description } from '@material-ui/icons';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
 import { Link } from 'react-router-dom';
 
 import { handleLeftSidebarToggle } from '../../services/navigation/navigation-slice';
 
 const MOBILE_BREAKPOINT = 600;
 
-const useStyles = makeStyles((theme: Theme) => createStyles({
-  toolbar: theme.mixins.toolbar
-}));
+const $ListWrapper = styled(List)(({ theme }: StyledMuiTheme) => `
+  ${theme.breakpoints.up('sm')} {
+    margin-top: ${theme.mixins.toolbar.minHeight}px;
+  }
+`);
 
 export const SidebarContent = () => {
-  const classes = useStyles();
   const dispatch = useDispatch();
   const [isMobile, setIsMobile] = useState(false);
   useEffect(() => {
@@ -43,22 +44,19 @@ export const SidebarContent = () => {
   };
 
   return (
-    <div>
-      <div className={classes.toolbar} />
-      <List onClick={() => closeMobileSidebar()}>
-        <ListItem key="Dashboard" button component={Link} to="/">
-          <ListItemIcon>
-            <Home />
-          </ListItemIcon>
-          <ListItemText primary="Dashboard" />
-        </ListItem>
-        <ListItem key="Invoice" button component={Link} to="/invoices">
-          <ListItemIcon>
-            <Description />
-          </ListItemIcon>
-          <ListItemText primary="Invoice" />
-        </ListItem>
-      </List>
-    </div>
+    <$ListWrapper onClick={() => closeMobileSidebar()}>
+      <ListItem key="Dashboard" button component={Link} to="/">
+        <ListItemIcon>
+          <Home />
+        </ListItemIcon>
+        <ListItemText primary="Dashboard" />
+      </ListItem>
+      <ListItem key="Invoice" button component={Link} to="/invoices">
+        <ListItemIcon>
+          <Description />
+        </ListItemIcon>
+        <ListItemText primary="Invoice" />
+      </ListItem>
+    </$ListWrapper>
   );
 };

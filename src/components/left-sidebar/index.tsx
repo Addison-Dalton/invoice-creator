@@ -1,46 +1,38 @@
-import React, { FunctionComponent } from 'react';
+import React from 'react';
+import styled from 'styled-components';
 import { useSelector, useDispatch } from 'react-redux';
 import { Hidden, Drawer } from '@material-ui/core';
-import { makeStyles, Theme, createStyles } from '@material-ui/core/styles';
+import { Theme } from '@material-ui/core/styles';
 
 import { handleLeftSidebarToggle } from '../../services/navigation/navigation-slice';
 import { selectLeftSidebarMobileOpen } from '../../services/navigation/navigation-selector';
 
 import { SidebarContent } from './sidebar-content';
 
-type Props = {
-  width: number;
-};
+const SIDEBAR_WIDTH = 240;
 
-type StyleProps = {
-  width: number;
-};
+const $Wrapper = styled.nav(({ theme }: { theme: Theme }) => `
+  flex: 0 0 auto;
+  ${theme.breakpoints.up('sm')} {
+    width: ${SIDEBAR_WIDTH}px;
+  }
+`);
 
-const useStyles = makeStyles<Theme, StyleProps>((theme) =>
-  createStyles({
-    drawer: {
-      flex: '0 0 auto',
-      [theme.breakpoints.up('sm')]: {
-        width: (p) => p.width
-      }
-    },
-    drawerPaper: {
-      width: (p) => p.width
-    }
-  }));
+const $Drawer = styled(Drawer)`
+  .MuiDrawer-paper {
+    width: ${SIDEBAR_WIDTH}px;
+  }
+`;
 
-export const LeftSidebar: FunctionComponent<Props> = ({ width }) => {
+export const LeftSidebar = () => {
   const dispatch = useDispatch();
   const { mobileOpen } = useSelector(selectLeftSidebarMobileOpen);
   const container = window !== undefined ? document.body : undefined;
-  const classes = useStyles({ width });
+
   return (
-    <nav className={classes.drawer}>
+    <$Wrapper>
       <Hidden smUp implementation="css">
-        <Drawer
-          classes={{
-            paper: classes.drawerPaper
-          }}
+        <$Drawer
           container={container}
           variant="temporary"
           anchor="left"
@@ -51,17 +43,16 @@ export const LeftSidebar: FunctionComponent<Props> = ({ width }) => {
           }}
         >
           <SidebarContent />
-        </Drawer>
+        </$Drawer>
       </Hidden>
       <Hidden xsDown implementation="css">
-        <Drawer
+        <$Drawer
           variant="permanent"
           open
-          classes={{ paper: classes.drawerPaper }}
         >
           <SidebarContent />
-        </Drawer>
+        </$Drawer>
       </Hidden>
-    </nav>
+    </$Wrapper>
   );
 };

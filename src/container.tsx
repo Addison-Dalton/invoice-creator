@@ -1,11 +1,9 @@
 import React from 'react';
-import { ThemeProvider } from 'styled-components';
+import styled, { ThemeProvider } from 'styled-components';
 import {
   ThemeProvider as MuiThemeProvider,
   StylesProvider,
-  createMuiTheme,
-  makeStyles,
-  createStyles
+  createMuiTheme
 } from '@material-ui/core/styles';
 import { CssBaseline } from '@material-ui/core';
 import { BrowserRouter as Router, Switch, Route } from 'react-router-dom';
@@ -27,35 +25,29 @@ const customTheme = createMuiTheme({
   }
 });
 
-const useStyles = makeStyles(() =>
-  createStyles({
-    content: {
-      display: 'flex'
-    }
-  }));
+const $MainContent = styled.div(({ theme }: StyledMuiTheme) => `
+  display: flex;
+  margin-top: ${theme.mixins.toolbar.minHeight}px;
+`);
 
-export const App = () => {
-  const sidebarWidth = 240;
-  const classes = useStyles();
-  return (
-    <StylesProvider injectFirst>
-      {/* Materiual UI Theme Provider */}
-      <MuiThemeProvider theme={customTheme}>
-        <CssBaseline />
-        {/* styled-components Theme Provider using MUI theme */}
-        <ThemeProvider theme={customTheme}>
-          <Router>
-            <NavBar />
-            <div className={classes.content}>
-              <LeftSidebar width={sidebarWidth} />
-              <Switch>
-                <Route exact path="/" component={Dashboard} />
-                <Route path="/invoices" component={Invoices} />
-              </Switch>
-            </div>
-          </Router>
-        </ThemeProvider>
-      </MuiThemeProvider>
-    </StylesProvider>
-  );
-};
+export const App = () => (
+  <StylesProvider injectFirst>
+    {/* Materiual UI Theme Provider */}
+    <MuiThemeProvider theme={customTheme}>
+      <CssBaseline />
+      {/* styled-components Theme Provider using MUI theme */}
+      <ThemeProvider theme={customTheme}>
+        <Router>
+          <NavBar />
+          <$MainContent>
+            <LeftSidebar />
+            <Switch>
+              <Route exact path="/" component={Dashboard} />
+              <Route path="/invoices" component={Invoices} />
+            </Switch>
+          </$MainContent>
+        </Router>
+      </ThemeProvider>
+    </MuiThemeProvider>
+  </StylesProvider>
+);
