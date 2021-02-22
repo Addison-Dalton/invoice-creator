@@ -6,7 +6,7 @@ import {
 
 import { $TextField } from './text-field';
 
-export const PersonalInfoFields: FunctionComponent<FormFields> = ({
+export const PersonalInfoFields: FunctionComponent<InvoiceFormFields> = ({
   handleInputChange,
   values
 }) => (
@@ -29,6 +29,24 @@ export const PersonalInfoFields: FunctionComponent<FormFields> = ({
         label="Email"
         name="email"
         value={values.personalInfo.email}
+        onChange={(e) => handleInputChange(e, 'change_personal_info')}
+      />
+    </Grid>
+    <Grid item sm={12} md={6}>
+      <$TextField
+        variant="outlined"
+        label="Phone"
+        name="phone"
+        value={values.personalInfo.phone}
+        onChange={(e) => handleInputChange(e, 'change_personal_info')}
+      />
+    </Grid>
+    <Grid item sm={12} md={6}>
+      <$TextField
+        variant="outlined"
+        label="Address"
+        name="address"
+        value={values.personalInfo.address}
         onChange={(e) => handleInputChange(e, 'change_personal_info')}
       />
     </Grid>

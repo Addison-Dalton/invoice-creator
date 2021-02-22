@@ -1,12 +1,6 @@
-import React, { useEffect, useReducer, ChangeEvent } from 'react';
+import React, { useEffect, useReducer } from 'react';
 import styled from 'styled-components';
-import {
-  Paper,
-  Box,
-  Container,
-  Grid,
-  Divider
-} from '@material-ui/core';
+import { Paper, Box, Container, Grid, Divider } from '@material-ui/core';
 
 import { reducer } from '../../../services/invoice/new-invoice-form/reducer';
 
@@ -17,7 +11,7 @@ const initialValues: InvoiceFormValues = {
   id: 0,
   invoiceNo: '000',
   date: new Date(),
-  termBegin: new Date(),
+  termStart: new Date(),
   termEnd: new Date(),
   personalInfo: {
     name: '',
@@ -28,21 +22,26 @@ const initialValues: InvoiceFormValues = {
   workItems: []
 };
 
-const $Divider = styled(Divider)(({ theme }: StyledMuiTheme) => `
+const $Divider = styled(Divider)(
+  ({ theme }: StyledMuiTheme) => `
   margin: ${theme.spacing(1)}px auto;
   width: 80%;
-`);
+`
+);
 
 export const InvoiceForm = () => {
   const [values, dispatch] = useReducer(reducer, initialValues);
 
-  const handleInputChange = (
-    e: ChangeEvent<HTMLInputElement | HTMLTextAreaElement>,
-    type: InvoiceFormActionType
-  ) => {
+  const handleInputChange: HandleInputChange = (e, type) => {
+    if (!e || !e.target) return;
     const { name: key, value } = e.target;
 
     dispatch({ type, key, value });
+  };
+
+  const handleDateChange: HandleDateChange = (inputName, date, type) => {
+    if (!inputName || !date) return;
+    dispatch({ type, key: inputName, value: date.toString() });
   };
 
   return (
@@ -51,9 +50,19 @@ export const InvoiceForm = () => {
         <Box p={2}>
           <form>
             <Grid container spacing={2}>
-              <InvoiceInfoFields handleInputChange={handleInputChange} values={values} />
-              <Grid item xs={12} spacing={5}><$Divider /></Grid>
-              <PersonalInfoFields handleInputChange={handleInputChange} values={values} />
+              <InvoiceInfoFields
+                handleInputChange={handleInputChange}
+                handleDateChange={handleDateChange}
+                values={values}
+              />
+              <Grid item xs={12}>
+                <$Divider />
+              </Grid>
+              <PersonalInfoFields
+                handleInputChange={handleInputChange}
+                handleDateChange={handleDateChange}
+                values={values}
+              />
             </Grid>
           </form>
         </Box>
