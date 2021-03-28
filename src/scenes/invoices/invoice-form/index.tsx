@@ -1,8 +1,7 @@
-import React, { useEffect, useReducer } from 'react';
+import React from 'react';
 import styled from 'styled-components';
 import { Paper, Box, Container, Grid, Divider } from '@material-ui/core';
-
-import { reducer } from '../../../services/invoice/new-invoice-form/reducer';
+import { Form } from 'react-final-form';
 
 import { PersonalInfoFields } from './personal-info-fields';
 import { InvoiceInfoFields } from './invoice-info-fields';
@@ -11,8 +10,8 @@ const initialValues: InvoiceFormValues = {
   id: 0,
   invoiceNo: '000',
   date: new Date(),
-  termStart: new Date(),
-  termEnd: new Date(),
+  termStart: null,
+  termEnd: null,
   personalInfo: {
     name: '',
     email: '',
@@ -30,41 +29,35 @@ const $Divider = styled(Divider)(
 );
 
 export const InvoiceForm = () => {
-  const [values, dispatch] = useReducer(reducer, initialValues);
-
-  const handleInputChange: HandleInputChange = (e, type) => {
-    if (!e || !e.target) return;
-    const { name: key, value } = e.target;
-
-    dispatch({ type, key, value });
+  const onSubmit = async (values: InvoiceFormValues) => {
+    console.log('TODO: submit');
   };
 
-  const handleDateChange: HandleDateChange = (inputName, date, type) => {
-    if (!inputName || !date) return;
-    dispatch({ type, key: inputName, value: date.toString() });
+  const validate = () => {
+    // TODO validation
   };
 
   return (
     <Container maxWidth="md">
       <Paper elevation={2}>
         <Box p={2}>
-          <form>
-            <Grid container spacing={2}>
-              <InvoiceInfoFields
-                handleInputChange={handleInputChange}
-                handleDateChange={handleDateChange}
-                values={values}
-              />
-              <Grid item xs={12}>
-                <$Divider />
-              </Grid>
-              <PersonalInfoFields
-                handleInputChange={handleInputChange}
-                handleDateChange={handleDateChange}
-                values={values}
-              />
-            </Grid>
-          </form>
+          <Form
+            onSubmit={onSubmit}
+            initialValues={initialValues}
+            // validate={validate}
+            render={({ handleSubmit, submitting, values }) => (
+              <form onSubmit={handleSubmit}>
+                <Grid container spacing={2}>
+                  <InvoiceInfoFields />
+                  <Grid item xs={12}>
+                    <$Divider />
+                  </Grid>
+                  <PersonalInfoFields />
+                </Grid>
+                <div>{JSON.stringify(values, null, 2)}</div>
+              </form>
+            )}
+          />
         </Box>
       </Paper>
     </Container>

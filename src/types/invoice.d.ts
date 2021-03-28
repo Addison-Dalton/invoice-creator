@@ -2,8 +2,8 @@ type InvoiceFormValues = {
   id: number;
   invoiceNo: string;
   date: Date;
-  termStart: Date;
-  termEnd: Date;
+  termStart: Date | null;
+  termEnd: Date | null;
   personalInfo: PersonalInfo;
   workItems: WorkItem[];
 }
@@ -26,31 +26,4 @@ type WorkItemDescription = {
   projectTitle: string;
   projectDescription: string;
   additionalInfo: string;
-}
-
-type InvoiceFormAction = {
-  type: InvoiceFormActionType;
-  key: string;
-  value: string
-}
-
-type InvoiceFormActionType = 'change_base_info' | 'change_personal_info' | 'change_work_item';
-
-type InputEventChange = import('react').ChangeEvent<HTMLInputElement | HTMLTextAreaElement>;
-/* eslint-disable no-unused-vars */
-type HandleInputChange = (
-  e: InputEventChange,
-  type: InvoiceFormActionType
-) => void | undefined;
-
-type HandleDateChange = (
-  inputName: string,
-  date: Date,
-  type: InvoiceFormActionType
-) => void | undefined;
-
-type InvoiceFormFields = {
-  values: InvoiceFormValues;
-  handleInputChange: HandleInputChange;
-  handleDateChange: HandleDateChange;
 }

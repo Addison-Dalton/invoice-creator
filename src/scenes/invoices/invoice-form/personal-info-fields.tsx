@@ -1,4 +1,5 @@
 import React, { FunctionComponent } from 'react';
+import { Field } from 'react-final-form';
 import {
   Grid,
   FormLabel
@@ -6,49 +7,66 @@ import {
 
 import { $TextField } from './text-field';
 
-export const PersonalInfoFields: FunctionComponent<InvoiceFormFields> = ({
-  handleInputChange,
-  values
-}) => (
+export const PersonalInfoFields: FunctionComponent = () => (
   <>
     <Grid item xs={12}>
       <FormLabel>{'Personal Info'}</FormLabel>
     </Grid>
     <Grid item sm={12} md={6}>
-      <$TextField
-        variant="outlined"
-        label="Full name"
-        name="name"
-        value={values.personalInfo.name}
-        onChange={(e) => handleInputChange(e, 'change_personal_info')}
-      />
+      <Field<string> name="personalInfo.name">
+        {({ input }) => (
+          <$TextField
+            required
+            variant="outlined"
+            label="Full name"
+            name={input.name}
+            value={input.value}
+            onChange={input.onChange}
+          />
+        )}
+      </Field>
     </Grid>
     <Grid item sm={12} md={6}>
-      <$TextField
-        variant="outlined"
-        label="Email"
-        name="email"
-        value={values.personalInfo.email}
-        onChange={(e) => handleInputChange(e, 'change_personal_info')}
-      />
+      <Field<string> name="personalInfo.email">
+        {({ input }) => (
+          <$TextField
+            required
+            variant="outlined"
+            label="Email"
+            name={input.name}
+            value={input.value}
+            onChange={input.onChange}
+          />
+        )}
+      </Field>
     </Grid>
     <Grid item sm={12} md={6}>
-      <$TextField
-        variant="outlined"
-        label="Phone"
-        name="phone"
-        value={values.personalInfo.phone}
-        onChange={(e) => handleInputChange(e, 'change_personal_info')}
-      />
+      <Field<string> name="personalInfo.phone">
+        {({ input }) => (
+          <$TextField
+            required
+            variant="outlined"
+            label="Phone"
+            name={input.name}
+            value={input.value}
+            onChange={input.onChange}
+          />
+        )}
+      </Field>
     </Grid>
     <Grid item sm={12} md={6}>
-      <$TextField
-        variant="outlined"
-        label="Address"
-        name="address"
-        value={values.personalInfo.address}
-        onChange={(e) => handleInputChange(e, 'change_personal_info')}
-      />
+      <Field<string> name="personalInfo.address">
+        {({ input }) => (
+          <$TextField
+            required
+            variant="outlined"
+            label="Address"
+            name={input.name}
+            value={input.value}
+            onChange={input.onChange}
+          />
+        )}
+      </Field>
     </Grid>
   </>
 );
